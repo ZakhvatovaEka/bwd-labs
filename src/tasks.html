@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        h1 {
+            color: #4a90e2;
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        dialog {
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            max-width: 100%;
+            position: relative;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .task-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            outline: none;
+            font-size: 1em;
+        }
+        
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .add-button {
+            background-color: #4a90e2;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .open-dialog-button {
+            background-color: #4a90e2;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .task-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .task-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .task-column-header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .delete-button {
+            background-color: #e57373;
+            color: white;
+        }
+
+        .checkmark {
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .delete-button:hover {
+            background-color: #c62828;
+        }
+
+        main {
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        .history-button {
+            background-color: #4a90e2;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .history-entry {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .restore-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 5px;
+        }
+
+        .restore-button:hover {
+            background-color: #388e3c;
+        }
+
+        .close-button {
+            background-color: #e57373;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+<header>
+    <nav>
+        <div class="logo">
+            <img src="images/logo.png" alt="Логотип" width="40">
+        </div>
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="projects.html">Проекты</a></li>
+            <li><a href="tasks.html" class="active">Список задач</a></li>
+            <li><a href="about.html">О приложении</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+</header>
+
+
+<!-- Боковое меню для мобильной версии -->
+<div class="sidebar">
+    <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="projects.html">Проекты</a></li>
+        <li><a href="tasks.html" class="active">Список задач</a></li>
+        <li><a href="about.html">О приложении</a></li>
+    </ul>
+</div>
+<main>
+    <h1>Управление списком задач</h1>
+
+    <!-- Кнопки действий -->
+    <button class="open-dialog-button" onclick="showDialog()">Добавить задачу</button>
+    <button class="history-button" onclick="showHistoryDialog()">Показать историю</button>
+
+    <!-- Модальное окно для добавления задачи -->
+    <dialog id="taskDialog">
+        <form class="task-form" method="dialog">
+            <input type="text" id="taskText" placeholder="Введите задачу" required />
+            <div>
+                <button class="add-button" onclick="addTask()">Добавить</button>
+                <button onclick="closeDialog()">Отмена</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Модальное окно для просмотра истории -->
+    <dialog id="historyDialog">
+        <div id="historyContent"></div>
+        <button class="close-button" onclick="closeHistoryDialog()">Закрыть</button>
+    </dialog>
+
+    <!-- Контейнер для карточек задач -->
+    <div class="task-container">
+        <div class="task-column">
+            <div class="task-column-header">Задачи</div>
+            <div id="todo" class="task-list"></div>
+        </div>
+        <div class="task-column">
+            <div class="task-column-header">В работе</div>
+            <div id="inprogress" class="task-list"></div>
+        </div>
+        <div class="task-column">
+            <div class="task-column-header">Выполненные</div>
+            <div id="done" class="task-list"></div>
+        </div>
+    </div>
+</main>
+<script src="script.js">
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let history = JSON.parse(localStorage.getItem('history')) || [];
+
+    // Открытие модального окна
+    function showDialog() {
+        const dialog = document.getElementById('taskDialog');
+        dialog.showModal();
+    }
+
+    // Закрытие модального окна
+    function closeDialog() {
+        const dialog = document.getElementById('taskDialog');
+        dialog.close();
+    }
+
+    // Открытие истории
+    function showHistoryDialog() {
+        const dialog = document.getElementById('historyDialog');
+        const historyContent = document.getElementById('historyContent');
+
+        historyContent.innerHTML = history.map((entry, index) => `
+            <div class="history-entry">
+                <p>${entry.action}: <strong>${entry.text}</strong> (${entry.timestamp})</p>
+                ${entry.action.includes('Удалена') ? `<button class="restore-button" onclick="restoreTask(${index})">Восстановить</button>` : ''}
+            </div>
+        `).join('');
+
+        dialog.showModal();
+    }
+
+    // Закрытие истории
+    function closeHistoryDialog() {
+        const dialog = document.getElementById('historyDialog');
+        dialog.close();
+    }
+
+    // Добавление задачи
+    function addTask() {
+        const text = document.getElementById('taskText').value;
+        if (text) {
+            const newTask = { text, status: 'todo' };
+            tasks.push(newTask);
+            saveHistory('Добавлена задача', text);
+            saveTasks();
+            render();
+        }
+        closeDialog();
+    }
+
+    // Изменение статуса задачи
+    function changeStatus(index, newStatus) {
+        const task = tasks[index];
+        saveHistory(`Изменён статус задачи на '${newStatus}'`, task.text);
+        task.status = newStatus;
+        saveTasks();
+        render();
+    }
+
+    // Удаление задачи
+    function deleteTask(index) {
+        const task = tasks[index];
+        saveHistory('Удалена задача', task.text);
+        tasks.splice(index, 1);
+        saveTasks();
+        render();
+    }
+
+    // Сохранение задач
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Сохранение истории
+    function saveHistory(action, text) {
+        const timestamp = new Date().toLocaleString();
+        history.push({ action, text, timestamp });
+        localStorage.setItem('history', JSON.stringify(history));
+    }
+
+    // Восстановление задачи
+    function restoreTask(index) {
+        const entry = history[index];
+        if (entry.action.includes('Удалена')) {
+            tasks.push({ text: entry.text, status: 'todo' });
+            saveTasks();
+            render();
+        }
+    }
+
+    // Отображение задач
+    function render() {
+        const statuses = { todo: '', inprogress: '', done: '' };
+
+        tasks.forEach((task, i) => {
+            statuses[task.status] += `
+                <div class="task-card">
+                    ${task.status === 'done' ? '<span class="checkmark">✔️</span>' : ''}
+                    ${task.text}
+                    <button class="delete-button" onclick="deleteTask(${i})">Удалить</button>
+                    ${task.status === 'todo' ? `<button onclick="changeStatus(${i}, 'inprogress')">В работу</button>` : ''}
+                    ${task.status === 'inprogress' ? `<button onclick="changeStatus(${i}, 'done')">Завершить</button>` : ''}
+                </div>`;
+        });
+
+        document.getElementById('todo').innerHTML = statuses.todo;
+        document.getElementById('inprogress').innerHTML = statuses.inprogress;
+        document.getElementById('done').innerHTML = statuses.done;
+    }
+
+    render();
+</script>
+
+</body>
+</html>
+
+
+

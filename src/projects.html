@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О приложении</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="marta.ico">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<!-- Шапка -->
+<header>
+    <nav>
+        <div class="logo">
+            <img src="images/logo.png" alt="Логотип" width="40">
+        </div>
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="projects.html"class="active">Проекты</a></li>
+            <li><a href="tasks.html">Список задач</a></li>
+            <li><a href="about.html">О приложении</a></li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+</header>
+<style src="script.js">
+
+    
+    .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; 
+            width: 250px;
+            height: 100%;
+            background-color: #4a90e2;
+            color: white;
+            padding-top: 60px;
+            transition: 0.3s;
+            z-index: 999;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .sidebar a:hover {
+            background-color: #333;
+        }
+
+        /* Анимации для бургер-меню */
+        .burger.active div:nth-child(1) {
+            transform: rotate(-45deg);
+            transform-origin: 0% 0%;
+        }
+
+        .burger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active div:nth-child(3) {
+            transform: rotate(45deg);
+            transform-origin: 0% 100%;
+        }
+
+        /* Анимация для появления сайдбара */
+        .sidebar.open {
+            left: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            header ul {
+                display: none;
+            }
+
+            header .burger {
+                display: block;
+            }
+
+            body.sidebar-open {
+                margin-left: 250px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        main {
+            margin-top: 60px;
+            padding: 20px;
+        }
+</style>
+
+<!-- Боковое меню для мобильной версии -->
+<div class="sidebar">
+    <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="projects.html"class="active">Проекты</a></li>
+        <li><a href="tasks.html">Список задач</a></li>
+        <li><a href="about.html">О приложении</a></li>
+    </ul>
+</div>
+
+<main>
+    <h1>Страница не найдена</h1>
+    <p>К сожалению, страница с проектами недоступна.</p>
+    <img src="images/404.png" alt="Ошибка 404" style="width: 300px; height: auto; margin: 20px 0;">
+    <p>Пожалуйста, вернитесь на <a href="index.html">главную страницу</a>.</p>
+</main>
+
+</body>
+</html>
