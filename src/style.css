@@ -142,3 +142,148 @@ main {
     align-items: center;
     text-align: center;
 }
+h1 {
+    color: #4a90e2;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    max-width: 100%;
+    position: relative;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    outline: none;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.add-button {
+    background-color: #4a90e2;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.open-dialog-button {
+    background-color: #4a90e2;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.task-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.task-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+
+.task-column-header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.task-card {
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.delete-button {
+    background-color: #e57373;
+    color: white;
+}
+
+.checkmark {
+    color: #4caf50;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.delete-button:hover {
+    background-color: #c62828;
+}
+
+main {
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.history-button {
+    background-color: #4a90e2;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.history-entry {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.restore-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 10px;
+    margin-top: 5px;
+}
+
+.restore-button:hover {
+    background-color: #388e3c;
+}
+
+.close-button {
+    background-color: #e57373;
+    color: white;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
